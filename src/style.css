@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg: #161923;
+  --bg-accent: #292e3e;
+  --color: #bcbdd0;
+  --accent: #b9f3e4;
+}
+
+body {
+  background: var(--bg);
+  color: var(--color);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
