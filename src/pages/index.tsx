@@ -2,8 +2,19 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 import { AiOutlineCopy } from "react-icons/ai";
 
+const DEFAULT_PASSWORD_OPTIONS = {
+  length: 12,
+  uppercase: true,
+  lowercase: true,
+  numbers: false,
+  symbols: true,
+};
+
 function App() {
   const [password, setPassword] = useState("");
+  const [passwordOptions, setPasswordOptions] = useState(
+    DEFAULT_PASSWORD_OPTIONS
+  );
 
   useEffect(() => {
     generateAndSetPassword();
@@ -11,13 +22,7 @@ function App() {
 
   async function generatePassword(): Promise<string> {
     return await invoke("generate_password", {
-      option: {
-        length: 21,
-        uppercase: true,
-        lowercase: true,
-        numbers: false,
-        symbols: true,
-      },
+      option: passwordOptions,
     });
   }
 
@@ -61,10 +66,21 @@ function App() {
       <div className="flex flex-col gap-3 bg-[var(--bg-accent)] p-3">
         <div className="flex justify-between">
           <p>Character Length</p>
-          <p className="text-[var(--accent)]">33</p>
+          <p className="text-[var(--accent)]">{passwordOptions.length}</p>
         </div>
 
-        <input type="range" />
+        <input
+          type="range"
+          min="8"
+          max="33"
+          value={passwordOptions.length}
+          onChange={(e) =>
+            setPasswordOptions((currOptions) => ({
+              ...currOptions,
+              length: +e.target.value,
+            }))
+          }
+        />
 
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
