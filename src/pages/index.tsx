@@ -91,9 +91,9 @@ function App() {
       <p className="text-center">Password Generator</p>
 
       <div className="flex justify-between items-center bg-[var(--bg-accent)] p-3">
-        <p>{password}</p>
+        <p className="truncate">{password}</p>
         <AiOutlineCopy
-          className="text-[var(--accent)] cursor-pointer"
+          className="text-[var(--accent)] cursor-pointer flex-shrink-0 text-lg"
           onClick={() => setClipboard(password)}
         />
       </div>
