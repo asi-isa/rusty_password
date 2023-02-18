@@ -31,13 +31,31 @@ function App() {
     generateAndSetPassword();
   }
 
+  function setClipboard(text: string) {
+    const type = "text/plain";
+    const blob = new Blob([text], { type });
+    const data = [new ClipboardItem({ [type]: blob })];
+
+    navigator.clipboard.write(data).then(
+      () => {
+        console.log("success");
+      },
+      () => {
+        console.log("failure");
+      }
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4 w-72">
       <p className="text-center">Password Generator</p>
 
       <div className="flex justify-between items-center bg-[var(--bg-accent)] p-3">
         <p>{password}</p>
-        <AiOutlineCopy className="text-[var(--accent)]" />
+        <AiOutlineCopy
+          className="text-[var(--accent)] cursor-pointer"
+          onClick={() => setClipboard(password)}
+        />
       </div>
 
       <div className="flex flex-col gap-3 bg-[var(--bg-accent)] p-3">

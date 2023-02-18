@@ -9,7 +9,7 @@ use passwords::PasswordGenerator;
 
 #[derive(Deserialize)]
 struct PasswordOption {
-    length: u8,
+    length: usize,
     uppercase: bool,
     lowercase: bool,
     numbers: bool,
@@ -20,7 +20,7 @@ struct PasswordOption {
 #[tauri::command]
 fn generate_password(option: PasswordOption) -> String {
     let pg = PasswordGenerator {
-        length: option.length as usize,
+        length: option.length,
         numbers: option.numbers,
         lowercase_letters: option.lowercase,
         uppercase_letters: option.uppercase,
