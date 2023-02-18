@@ -19,3 +19,44 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+
+/* https://css-tricks.com/sliding-nightmare-understanding-range-input/ */
+
+[type="range"] {
+  --thumb: #fff;
+  /* max, min and val will and must be set by JavaScript */
+  --range: calc(var(--max) - var(--min));
+  --ratio: calc((var(--val) - var(--min)) / var(--range));
+  --sx: calc(0.5 * 1.5em + var(--ratio) * (100% - 1.5em));
+
+  margin: 0;
+  padding: 0;
+  height: 1.5em;
+  background: transparent;
+  font: 1em/1 arial, sans-serif;
+}
+[type="range"],
+[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+[type="range"]::-webkit-slider-runnable-track {
+  box-sizing: border-box;
+  border: none;
+  height: 0.25em;
+  background: linear-gradient(var(--accent), var(--accent)) 0 / var(--sx) 100%
+    no-repeat var(--bg);
+}
+[type="range"]::-webkit-slider-thumb {
+  margin-top: -0.625em;
+  box-sizing: border-box;
+  border: none;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: var(--thumb);
+  cursor: pointer;
+}
+[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--bg);
+  border: 2px solid var(--accent);
+}

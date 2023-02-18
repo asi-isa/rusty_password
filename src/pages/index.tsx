@@ -1,9 +1,10 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { AiOutlineCopy } from "react-icons/ai";
 
 import PasswordOption from "../components/PasswordOption";
 import Popup from "../components/Popup";
+import Slider from "../components/Slider";
 import StrengthIndicator from "../components/StrengthIndicator";
 
 const DEFAULT_PASSWORD_OPTIONS = {
@@ -14,7 +15,7 @@ const DEFAULT_PASSWORD_OPTIONS = {
   symbols: false,
 };
 
-type PasswordOptionsType = typeof DEFAULT_PASSWORD_OPTIONS;
+export type PasswordOptionsType = typeof DEFAULT_PASSWORD_OPTIONS;
 
 function App() {
   const [password, setPassword] = useState("password123");
@@ -111,17 +112,9 @@ function App() {
             <p className="text-[var(--accent)]">{passwordOptions.length}</p>
           </div>
 
-          <input
-            type="range"
-            min="8"
-            max="33"
-            value={passwordOptions.length}
-            onChange={(e) => {
-              setPasswordOptions((currOptions) => ({
-                ...currOptions,
-                length: +e.target.value,
-              }));
-            }}
+          <Slider
+            passwordOptions={passwordOptions}
+            setPasswordOptions={setPasswordOptions}
           />
 
           <div className="flex flex-col gap-1">
