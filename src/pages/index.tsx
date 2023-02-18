@@ -66,11 +66,20 @@ function App() {
   function negatePasswordOptionFor(
     key: KeysWithValsOfType<PasswordOptionsType, boolean>
   ) {
-    // TODO assert that at least one option has to be true
-    setPasswordOptions((currOptions) => ({
-      ...currOptions,
-      [key]: !currOptions[key],
-    }));
+    setPasswordOptions((currOptions) => {
+      const oldState = { ...currOptions };
+      const newState = { ...currOptions, [key]: !currOptions[key] };
+
+      const atLeastOneValueIsTrue = Object.values(newState).some(
+        (value) => value === true
+      );
+
+      if (atLeastOneValueIsTrue) {
+        return newState;
+      }
+
+      return oldState;
+    });
   }
 
   return (
