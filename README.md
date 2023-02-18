@@ -1,7 +1,11 @@
-# Tauri + Next.js + Typescript
+# rusty_password
 
-This template should help get you started developing with Tauri, Next.js and Typescript.
+rusty_password is a simple password generator build with [Tauri](https://tauri.app/), [Next.js](https://nextjs.org/) and [Rust](https://www.rust-lang.org/).
 
-## Recommended IDE Setup
+## Screenshots
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+![Image](./readme_assets/preview1.png)
+
+## Design
+
+[Frontendmentor.io](https://www.frontendmentor.io/challenges/password-generator-app-Mr8CLycqjh)
