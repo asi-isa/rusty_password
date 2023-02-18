@@ -5,7 +5,7 @@
 
 use serde::Deserialize;
 
-use passwords::PasswordGenerator;
+use passwords::{analyzer, scorer, PasswordGenerator};
 
 #[derive(Deserialize)]
 struct PasswordOption {
@@ -33,9 +33,14 @@ fn generate_password(option: PasswordOption) -> String {
     pg.generate_one().unwrap()
 }
 
+#[tauri::command]
+fn score_password(password: &str) -> f64 {
+    scorer::score(&analyzer::analyze(password))
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![generate_password])
+        .invoke_handler(tauri::generate_handler![generate_password, score_password])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

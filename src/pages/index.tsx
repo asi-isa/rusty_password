@@ -2,6 +2,7 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 import { AiOutlineCopy } from "react-icons/ai";
 import PasswordOption from "../components/PasswordOption";
+import StrengthIndicator from "../components/StrengthIndicator";
 
 const DEFAULT_PASSWORD_OPTIONS = {
   length: 12,
@@ -15,6 +16,7 @@ type PasswordOptionsType = typeof DEFAULT_PASSWORD_OPTIONS;
 
 function App() {
   const [password, setPassword] = useState("");
+  const [passwordScore, setPasswordScore] = useState(0.0);
   const [passwordOptions, setPasswordOptions] = useState(
     DEFAULT_PASSWORD_OPTIONS
   );
@@ -22,6 +24,10 @@ function App() {
   useEffect(() => {
     generateAndSetPassword();
   }, []);
+
+  useEffect(() => {
+    scorePassword(password);
+  }, [password]);
 
   useEffect(() => {
     console.log(passwordOptions);
@@ -39,8 +45,9 @@ function App() {
     setPassword(password);
   }
 
-  async function onRegenerate() {
-    generateAndSetPassword();
+  async function scorePassword(password: string) {
+    const score: number = await invoke("score_password", { password });
+    setPasswordScore(score);
   }
 
   function setClipboard(text: string) {
@@ -50,6 +57,7 @@ function App() {
 
     navigator.clipboard.write(data).then(
       () => {
+        // TODO show popup
         console.log("success");
       },
       () => {
@@ -139,17 +147,12 @@ function App() {
         <div className="flex justify-between items-center bg-[var(--bg)] p-2">
           <p>STRENGTH</p>
 
-          <div className="flex gap-1">
-            <div className="w-2 h-5 border border-white" />
-            <div className="w-2 h-5 border border-white" />
-            <div className="w-2 h-5 border border-white" />
-            <div className="w-2 h-5 border border-white" />
-          </div>
+          <StrengthIndicator passwordScore={passwordScore} />
         </div>
 
         <div
           className="flex justify-center items-center bg-[var(--accent)] p-2 cursor-pointer"
-          onClick={onRegenerate}
+          onClick={() => generateAndSetPassword()}
         >
           <p className="text-[var(--bg)]">REGENERATE</p>
         </div>
