@@ -1,14 +1,17 @@
 import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 import { AiOutlineCopy } from "react-icons/ai";
+import PasswordOption from "../components/PasswordOption";
 
 const DEFAULT_PASSWORD_OPTIONS = {
   length: 12,
   uppercase: true,
   lowercase: true,
-  numbers: false,
-  symbols: true,
+  numbers: true,
+  symbols: false,
 };
+
+type PasswordOptionsType = typeof DEFAULT_PASSWORD_OPTIONS;
 
 function App() {
   const [password, setPassword] = useState("");
@@ -19,6 +22,10 @@ function App() {
   useEffect(() => {
     generateAndSetPassword();
   }, []);
+
+  useEffect(() => {
+    console.log(passwordOptions);
+  }, [passwordOptions]);
 
   async function generatePassword(): Promise<string> {
     return await invoke("generate_password", {
@@ -51,6 +58,21 @@ function App() {
     );
   }
 
+  // https://stackoverflow.com/questions/54520676/in-typescript-how-to-get-the-keys-of-an-object-type-whose-values-are-of-a-given
+  type KeysWithValsOfType<T, V> = {
+    [K in keyof T]-?: T[K] extends V ? K : never;
+  }[keyof T];
+
+  function negatePasswordOptionFor(
+    key: KeysWithValsOfType<PasswordOptionsType, boolean>
+  ) {
+    // TODO assert that at least one option has to be true
+    setPasswordOptions((currOptions) => ({
+      ...currOptions,
+      [key]: !currOptions[key],
+    }));
+  }
+
   return (
     <div className="flex flex-col gap-4 w-72">
       <p className="text-center">Password Generator</p>
@@ -74,34 +96,35 @@ function App() {
           min="8"
           max="33"
           value={passwordOptions.length}
-          onChange={(e) =>
+          onChange={(e) => {
             setPasswordOptions((currOptions) => ({
               ...currOptions,
               length: +e.target.value,
-            }))
-          }
+            }));
+          }}
         />
 
         <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 border border-white" />
-            <p>Include Uppercase Letters</p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 border border-white" />
-            <p>Include Uppercase Letters</p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 border border-white" />
-            <p>Include Uppercase Letters</p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 border border-white" />
-            <p>Include Uppercase Letters</p>
-          </div>
+          <PasswordOption
+            title={"Include Uppercase Letters"}
+            active={passwordOptions.uppercase}
+            onClick={() => negatePasswordOptionFor("uppercase")}
+          />
+          <PasswordOption
+            title={"Include Lowercase Letters"}
+            active={passwordOptions.lowercase}
+            onClick={() => negatePasswordOptionFor("lowercase")}
+          />
+          <PasswordOption
+            title={"Include Numbers"}
+            active={passwordOptions.numbers}
+            onClick={() => negatePasswordOptionFor("numbers")}
+          />
+          <PasswordOption
+            title={"Include Symbols"}
+            active={passwordOptions.symbols}
+            onClick={() => negatePasswordOptionFor("symbols")}
+          />
         </div>
 
         <div className="flex justify-between items-center bg-[var(--bg)] p-2">
