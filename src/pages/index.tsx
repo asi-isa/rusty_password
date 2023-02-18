@@ -93,23 +93,25 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 w-72">
-        <p className="text-center">Password Generator</p>
+      <div className="flex flex-col gap-5 w-96">
+        <p className="text-center text-xl">Password Generator</p>
 
-        <div className="flex justify-between items-center bg-[var(--bg-accent)] p-3">
-          <p className={`truncate ${!passwordScore && "invisible"}`}>
+        <div className="flex justify-between items-center bg-[var(--bg-accent)] p-3 rounded-md">
+          <p className={`truncate ${!passwordScore && "invisible"} text-lg`}>
             {password}
           </p>
           <AiOutlineCopy
-            className="text-[var(--accent)] cursor-pointer flex-shrink-0 text-lg"
+            className="text-[var(--accent)] cursor-pointer flex-shrink-0 text-xl"
             onClick={() => setClipboard(password)}
           />
         </div>
 
-        <div className="flex flex-col gap-3 bg-[var(--bg-accent)] p-3">
+        <div className="flex flex-col gap-4 bg-[var(--bg-accent)] p-3 rounded-md">
           <div className="flex justify-between">
-            <p>Character Length</p>
-            <p className="text-[var(--accent)]">{passwordOptions.length}</p>
+            <p className="">Password Length</p>
+            <p className="text-[var(--accent)] text-xl">
+              {passwordOptions.length}
+            </p>
           </div>
 
           <Slider
@@ -117,7 +119,7 @@ function App() {
             setPasswordOptions={setPasswordOptions}
           />
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2">
             <PasswordOption
               title={"Include Uppercase Letters"}
               active={passwordOptions.uppercase}
@@ -140,17 +142,19 @@ function App() {
             />
           </div>
 
-          <div className="flex justify-between items-center bg-[var(--bg)] p-2">
+          <div className="flex justify-between items-center bg-[var(--bg)] p-2 rounded-sm">
             <p>STRENGTH</p>
 
             <StrengthIndicator passwordScore={passwordScore} />
           </div>
 
           <div
-            className="flex justify-center items-center bg-[var(--accent)] p-2 cursor-pointer"
+            className="group flex justify-center items-center bg-[var(--accent)] p-2 cursor-pointer rounded-sm hover:bg-[var(--bg-accent)] border border-[var(--accent)] transition-colors duration-300"
             onClick={() => generateAndSetPassword()}
           >
-            <p className="text-[var(--bg)]">REGENERATE</p>
+            <p className="text-[var(--bg)] group-hover:text-[var(--accent)] transition-colors duration-300">
+              REGENERATE
+            </p>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ interface PopupProps {
 
 const Popup = ({ txt }: PopupProps) => {
   return (
-    <div className="absolute top-6 left-0 right-0  w-full flex justify-center">
+    <div className="absolute top-6 left-0 right-0  w-full flex justify-center ">
       <AnimatePresence>
         {txt && (
           <motion.div
@@ -14,7 +14,7 @@ const Popup = ({ txt }: PopupProps) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.65 }}
-            className="bg-white text-[var(--bg)] py-2 px-4"
+            className="bg-white text-[var(--bg)] py-2 px-4 rounded-md"
           >
             <p>{txt}</p>
           </motion.div>

@@ -18,6 +18,9 @@ body {
   align-items: center;
   height: 100vh;
   overflow: hidden;
+  font-family: "Chivo Mono", monospace, Inter, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
 }
 
 /* https://css-tricks.com/sliding-nightmare-understanding-range-input/ */
