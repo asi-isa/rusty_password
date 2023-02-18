@@ -76,7 +76,6 @@ function App() {
     key: KeysWithValsOfType<PasswordOptionsType, boolean>
   ) {
     setPasswordOptions((currOptions) => {
-      const oldState = { ...currOptions };
       const newState = { ...currOptions, [key]: !currOptions[key] };
 
       const atLeastOneValueIsTrue = Object.values(newState).some(
@@ -87,7 +86,7 @@ function App() {
         return newState;
       }
 
-      return oldState;
+      return currOptions;
     });
   }
 
