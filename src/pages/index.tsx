@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineCopy } from "react-icons/ai";
 
 import PasswordOption from "../components/PasswordOption";
