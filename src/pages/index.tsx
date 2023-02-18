@@ -23,15 +23,11 @@ function App() {
 
   useEffect(() => {
     generateAndSetPassword();
-  }, []);
+  }, [passwordOptions]);
 
   useEffect(() => {
     scorePassword(password);
   }, [password]);
-
-  useEffect(() => {
-    console.log(passwordOptions);
-  }, [passwordOptions]);
 
   async function generatePassword(): Promise<string> {
     return await invoke("generate_password", {
