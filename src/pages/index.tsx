@@ -17,7 +17,7 @@ const DEFAULT_PASSWORD_OPTIONS = {
 type PasswordOptionsType = typeof DEFAULT_PASSWORD_OPTIONS;
 
 function App() {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("password123");
   const [passwordScore, setPasswordScore] = useState(0.0);
   const [passwordOptions, setPasswordOptions] = useState(
     DEFAULT_PASSWORD_OPTIONS
@@ -96,7 +96,9 @@ function App() {
         <p className="text-center">Password Generator</p>
 
         <div className="flex justify-between items-center bg-[var(--bg-accent)] p-3">
-          <p className="truncate">{password}</p>
+          <p className={`truncate ${!passwordScore && "invisible"}`}>
+            {password}
+          </p>
           <AiOutlineCopy
             className="text-[var(--accent)] cursor-pointer flex-shrink-0 text-lg"
             onClick={() => setClipboard(password)}
